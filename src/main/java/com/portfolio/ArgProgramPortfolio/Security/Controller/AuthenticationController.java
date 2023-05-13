@@ -27,10 +27,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class AuthenticationController {
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -46,7 +47,7 @@ public class AuthenticationController {
     
     
     @PostMapping("/nuevo")
-    public ResponseEntity<?> nuevo(@RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
+    public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return new ResponseEntity (new Mensaje("Campos mal puestos o email invalido"),HttpStatus.BAD_REQUEST);
         
@@ -70,7 +71,7 @@ public class AuthenticationController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<JwtDto> login( @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
+    public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return new ResponseEntity (new Mensaje("Campos mal puestos"),HttpStatus.BAD_REQUEST);
         

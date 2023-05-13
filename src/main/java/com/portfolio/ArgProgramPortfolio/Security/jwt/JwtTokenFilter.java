@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -34,7 +35,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
     }
-    catch (Exception e){
+    catch (UsernameNotFoundException e){
         logger.error("Fallo el metodo doFilterInternal");
     }
     filterChain.doFilter(request, response);
@@ -45,6 +46,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return header.replace("Bearer", "");
         return null;
     }
+    
 }
 
     

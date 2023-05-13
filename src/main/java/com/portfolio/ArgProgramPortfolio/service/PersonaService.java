@@ -17,22 +17,23 @@ import org.springframework.stereotype.Service;
     public I_PersonaRepository persoRepo;
 
     @Override
-    public List<Persona> verPersonas() {
-        return persoRepo.findAll();
+    public List<Persona> getPersonas() {
+        List<Persona> persona = persoRepo.findAll();
+        return persona;
     }
 
     @Override
-    public void crearPersona(Persona persona) {
+    public void savePersona(Persona persona) {
         persoRepo.save(persona);
     }
 
     @Override
-    public void borrarPersona(Long id) {
+    public void deletePersona(Long id) {
         persoRepo.deleteById(id);
     }
 
     @Override
-    public Persona buscarPersona(Long id) {
+    public Persona findPersona(Long id) {
         return persoRepo.findById(id).orElse(null);
     }
         
